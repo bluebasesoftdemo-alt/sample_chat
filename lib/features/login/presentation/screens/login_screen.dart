@@ -13,7 +13,7 @@ import '../../../../component/custom_button/custom_button.dart';
 import '../../../../component/custom_text/custom_text.dart';
 import '../../../../core/constant/stirng.dart';
 import '../../../../core/utils/logger.dart';
-import '../../../otp/otp_screen.dart';
+import '../../../otp/presentation/screens/otp_screen.dart';
 import '../provider/login_provider.dart';
 
 class LoginScreen extends StatelessWidget {

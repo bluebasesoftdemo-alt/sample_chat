@@ -6,12 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sample_chat/features/home/Homescreen.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
-import '../../component/custom_button/custom_button.dart';
-import '../../component/custom_text/custom_text.dart';
-import '../../component/custom_text_field/custom_text_field.dart';
-import '../../core/constant/color.dart';
-import '../../core/constant/stirng.dart';
-import '../login/presentation/screens/login_screen.dart';
+import '../../../../component/custom_button/custom_button.dart';
+import '../../../../component/custom_text/custom_text.dart';
+import '../../../../component/custom_text_field/custom_text_field.dart';
+import '../../../../core/constant/color.dart';
+import '../../../../core/constant/stirng.dart';
+import '../../../login/presentation/screens/login_screen.dart';
 
 class OtpScreen extends StatelessWidget {
   String phonenumber;
