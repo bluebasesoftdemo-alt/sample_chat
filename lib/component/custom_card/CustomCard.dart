@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sample_chat/features/single_chat/SingleChatScreen.dart';
 
 import '../../features/home/data/model/ChatModel.dart';
 class CustomCard extends StatelessWidget {
@@ -12,13 +13,13 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-       /* Navigator.push(
+        Navigator.push(
             context,
            MaterialPageRoute(
-                builder: (contex) => IndividualPage(
+                builder: (contex) => SingleChatScreen(
                       chatModel: chatModel,
                       sourchat: sourchat,
-                    )));*/
+                    )));
       },
       child: Column(
         children: [

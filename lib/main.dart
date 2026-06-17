@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sample_chat/features/home/Homescreen.dart';
-import 'package:sample_chat/features/login/login_screen.dart';
-import 'package:sample_chat/features/otp/otp_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_chat/features/splash/SplashScreen.dart';
 
+import 'di/locator.dart';
+import 'features/login/presentation/provider/login_provider.dart';
+
 void main() {
+  setLocator();
   runApp(const MyApp());
 }
 
@@ -14,15 +16,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => locator<LoginProvider>()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+        home: SplashScreen(),
       ),
-      home: SplashScreen(),
     );
   }
 }
-
-

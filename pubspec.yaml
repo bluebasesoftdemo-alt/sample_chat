@@ -39,10 +39,17 @@ dependencies:
   google_fonts: ^8.1.0
   sms_autofill: ^2.5.0
   toastification: ^3.2.0
+  #socket_io_client: ^1.0.1
+  socket_io_client: ^3.1.6
   #Device id and Package info
   #package_info_plus: ^10.1.0
   #device_info_plus: ^13.1.0
   #android_id: ^0.5.1
+  dio: ^5.9.2
+  dio_smart_retry: ^7.0.1
+  provider: ^6.1.5+1
+  get_it: ^9.2.1
+  shimmer: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +78,7 @@ flutter:
     - assets/login/
     - assets/otp/
     - assets/com/
+    - assets/chat/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
