@@ -1,31 +1,30 @@
 class OtpResponse {
-  bool? addressverified;
-  bool? isnewuser;
   String? message;
-  bool? requiresprofilecompletion;
-  bool? success;
-  String? userid;
+  bool? status;
+  String? user_id;
+  String? name;
+  String? profile;
+  String? token;
 
-  OtpResponse({this.addressverified, this.isnewuser, this.message, this.requiresprofilecompletion, this.success, this.userid});
+  OtpResponse({this.message, this.status, this.user_id});
 
   OtpResponse.fromJson(Map<String, dynamic> json) {
-    addressverified = json['address_verified'];
-    isnewuser = json['is_new_user'];
     message = json['message'];
-    requiresprofilecompletion = json['requires_profile_completion'];
-    success = json['success'];
-    userid = json['user_id'];
+    status = json['status'];
+    user_id = json['user_id'];
+    name = json['name'];
+    profile = json['profile'];
+    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['address_verified'] = addressverified;
-    data['is_new_user'] = isnewuser;
     data['message'] = message;
-    data['requires_profile_completion'] = requiresprofilecompletion;
-    data['success'] = success;
-    data['user_id'] = userid;
+    data['status'] = status;
+    data['user_id'] = user_id;
+    data['name'] = name;
+    data['profile'] = profile;
+    data['token'] = token;
     return data;
   }
 }
-

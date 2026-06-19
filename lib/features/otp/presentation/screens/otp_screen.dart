@@ -1,34 +1,26 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sample_chat/features/home/Homescreen.dart';
+import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../component/custom_button/custom_button.dart';
 import '../../../../component/custom_text/custom_text.dart';
-import '../../../../component/custom_text_field/custom_text_field.dart';
 import '../../../../core/constant/color.dart';
 import '../../../../core/constant/stirng.dart';
+import '../../../home/Homescreen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../provider/otp_provider.dart';
 
 class OtpScreen extends StatelessWidget {
-  String phonenumber;
-  String? userotpcode;
-  bool enable = false;
-  TextEditingController txteditcntotpno = TextEditingController();
+  String email;
 
-  OtpScreen(this.phonenumber, this.userotpcode, {super.key});
+  OtpScreen(this.email, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final otpcode =  Provider.of<OtpProvider>(context, listen: false);
-    if (context.mounted) {
-      Future.delayed(Duration(seconds: 2), () {
-        // otpcode.start();
-      });
-    }
+    final otpcode = Provider.of<OtpProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -60,7 +52,7 @@ class OtpScreen extends StatelessWidget {
                       CustomText.headingFive('', Colors.black),
                       CustomText.headingFive(otpTextOne, Colors.black),
                       CustomText.captionOne(otpTextTwo, Colors.black),
-                      CustomText.captionTwo('$phonenumber', Colors.black),
+                      CustomText.captionTwo('$email', Colors.black),
                     ],
                   ),
                 ),
@@ -83,8 +75,6 @@ class OtpScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                enable = true;
-                //   otpcode.remainingSeconds = 0;
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -93,7 +83,7 @@ class OtpScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             CustomText.captionOne(
-              'Enter the verification code: $userotpcode here!',
+              'Enter the verification code here!',
               Colors.black,
             ),
             SizedBox(height: 10),
@@ -102,7 +92,7 @@ class OtpScreen extends StatelessWidget {
                 codeLength: 6,
                 onCodeChanged: (c) {
                   if (c!.isNotEmpty) {
-                    // otpcode.update(c);
+                    otpcode.update(c);
                   }
                 },
                 autoFocus: true,
@@ -119,106 +109,36 @@ class OtpScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 5),
-            /*   Consumer<OtpProvider>(builder: (_,timer,_){
-                  return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('$otpTextFive ${timer.remainingSeconds}s'),
-                        timer.resendStatus ? TextButton(onPressed: (){
-                          timer.resend();
-                        }, child: Text(otpTextSix,style: TextStyle(
-                          color: Colors.green,
-                          decoration: TextDecoration.underline,
-                          decorationThickness: 1, decorationColor: Colors.green
-                        ),)): Text(''),
-                      ]);
-                }),*/
             SizedBox(height: 10),
             CustomButton(
               disabled: false,
               busy: false,
               title: otpTextSeven,
               onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-                //context.push('/addprofile');
-                /*  if(otpcode.remainingSeconds>0){
-                     if(otpcode.smsCode == userotpcode){
-                      String otpResponse = await otpcode.execute(phonenumber,userotpcode!, 'authentication');
-                         if(otpResponse=='landing'){
-                           if(!context.mounted) return;
-                          // Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AddProfileScreen(mboileno: phonenumber,)));
-                          //  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>DashboardScreen()));
-                         }else{
-                           if(!context.mounted) return;
-
-                          // Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AddProfileScreen(mboileno: phonenumber,)));
-                         }
-                     }else{
-                       */ /*Fluttertoast.showToast(
-                         msg: "Please enter valid otp!",
-                         toastLength: Toast.LENGTH_SHORT, // Duration of the toast
-                         gravity: ToastGravity.BOTTOM, // Position of the toast
-                         timeInSecForIosWeb: 1, // Duration for iOS and web
-                         backgroundColor: Colors.black54, // Background color
-                         textColor: Colors.white, // Text color
-                         fontSize: 16.0, // Font size
-                       );*/ /*
-                     }
-                  }else{
-                    */ /*Fluttertoast.showToast(
-                      msg: "Please enter the otp!",
-                      toastLength: Toast.LENGTH_SHORT, // Duration of the toast
-                      gravity: ToastGravity.BOTTOM, // Position of the toast
-                      timeInSecForIosWeb: 1, // Duration for iOS and web
-                      backgroundColor: Colors.black54, // Background color
-                      textColor: Colors.white, // Text color
-                      fontSize: 16.0, // Font size
-                    );*/ /*
-                  }*/
+                bool otpResponse = await otpcode.execute(email);
+                if (otpResponse) {
+                  if (!context.mounted) return;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(email: email),
+                    ),
+                  );
+                } else {
+                  toastification.show(
+                    type: ToastificationType.error,
+                    alignment: Alignment.bottomCenter,
+                    context: context,
+                    // optional if you use ToastificationWrapper
+                    title: Text('InValid Otp!'),
+                    autoCloseDuration: const Duration(seconds: 5),
+                  );
+                }
               },
             ),
           ],
         ),
       ),
-      bottomNavigationBar: enable
-          ? Container(
-              height: 170,
-              margin: EdgeInsets.symmetric(horizontal: 4.0),
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: SecondaryColor,
-                    blurRadius: 5,
-                    spreadRadius: 5,
-                  ),
-                ],
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(25),
-                  topLeft: Radius.circular(25),
-                ),
-                color: Colors.white,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 20),
-                  CustomFormField(
-                    'Phone Number',
-                    false,
-                    false,
-                    false,
-                    true,
-                    txteditcntotpno,
-                  ),
-                  SizedBox(height: 20),
-                  CustomButton(title: otpTextEight),
-                ],
-              ),
-            )
-          : SizedBox(),
     );
   }
 }

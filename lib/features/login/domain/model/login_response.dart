@@ -1,10 +1,10 @@
-class OtpResponse {
+class LoginResponse {
   String? message;
   bool? status;
 
-  OtpResponse({this.message, this.status});
+  LoginResponse({this.message, this.status});
 
-  OtpResponse.fromJson(Map<String, dynamic> json) {
+  LoginResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
   }

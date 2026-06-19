@@ -4,6 +4,10 @@ import '../features/login/data/datasource/login_remote_data_source/login_remote_
 import '../features/login/data/repositories/login_repository_impl.dart';
 import '../features/login/domain/usecase/login_usecase.dart';
 import '../features/login/presentation/provider/login_provider.dart';
+import '../features/otp/data/datasource/otp_remote_data_source/otp_remote_data_source_impl.dart';
+import '../features/otp/data/repositories/otp_repository_impl.dart';
+import '../features/otp/domain/usecase/otp_usecase.dart';
+import '../features/otp/presentation/provider/otp_provider.dart';
 
 final locator = GetIt.instance;
 
@@ -24,10 +28,18 @@ void setLocator() {
     () => LoginProvider(loginUseCase: locator<LoginUseCase>()),
   );
   //otp
-  /* locator.registerLazySingleton<OtpRemoteDataSourceImpl>(() => OtpRemoteDataSourceImpl());
-  locator.registerLazySingleton<OtpRepositoryImpl>(()=> OtpRepositoryImpl(otpRemoteDataSourceImpl: locator<OtpRemoteDataSourceImpl>()));
-  locator.registerLazySingleton<OtpUseCase>(() => OtpUseCase(otpRepository: locator<OtpRepositoryImpl>()));
-  locator.registerFactory(()=>OtpProvider(otpUseCase: locator<OtpUseCase>()));*/
+  locator.registerLazySingleton<OtpRemoteDataSourceImpl>(
+    () => OtpRemoteDataSourceImpl(),
+  );
+  locator.registerLazySingleton<OtpRepositoryImpl>(
+    () => OtpRepositoryImpl(
+      otpRemoteDataSourceImpl: locator<OtpRemoteDataSourceImpl>(),
+    ),
+  );
+  locator.registerLazySingleton<OtpUseCase>(
+    () => OtpUseCase(otpRepository: locator<OtpRepositoryImpl>()),
+  );
+  locator.registerFactory(() => OtpProvider(otpUseCase: locator<OtpUseCase>()));
   //profile
   /* locator.registerLazySingleton<ProfileRemoteDataSourceImpl>(() => ProfileRemoteDataSourceImpl());
   locator.registerLazySingleton<ProfileRepositoryImpl>(()=> ProfileRepositoryImpl(profileRemoteDataSourceImpl: locator<ProfileRemoteDataSourceImpl>()));

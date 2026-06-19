@@ -1,6 +1,6 @@
-import '../../../login/domain/model/login_response.dart';
 import '../../domain/repositories/otp_repository.dart';
 import '../datasource/otp_remote_data_source/otp_remote_data_source_impl.dart';
+import '../model/otp_response.dart';
 
 class OtpRepositoryImpl extends OtpRepository {
   OtpRemoteDataSourceImpl otpRemoteDataSourceImpl;
@@ -8,11 +8,7 @@ class OtpRepositoryImpl extends OtpRepository {
   OtpRepositoryImpl({required this.otpRemoteDataSourceImpl});
 
   @override
-  Future<OtpResponse> verifyOtp(
-    String phone,
-    String code,
-    String purpose,
-  ) async {
-    return otpRemoteDataSourceImpl.validateOtp(phone, code, purpose);
+  Future<OtpResponse> verifyOtp(String email, String code) async {
+    return otpRemoteDataSourceImpl.validateOtp(email, code);
   }
 }

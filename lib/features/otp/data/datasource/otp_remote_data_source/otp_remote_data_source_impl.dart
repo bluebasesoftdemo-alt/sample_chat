@@ -1,33 +1,26 @@
 import 'package:dio/dio.dart';
 
 import '../../../../../core/utils/logger.dart';
-import '../../../../login/domain/model/login_response.dart';
+import '../../model/otp_response.dart';
 import 'otp_remote_data_source.dart';
 
 class OtpRemoteDataSourceImpl extends OtpRemoteDataSource {
   @override
-  Future<OtpResponse> validateOtp(
-    String phone,
-    String code,
-    String purpose,
-  ) async {
+  Future<OtpResponse> validateOtp(String email, String code) async {
     Dio dio = Dio(
       BaseOptions(
-        baseUrl: "http://34.135.150.3:8000/auth/",
-        receiveTimeout: Duration(seconds: 2),
-        connectTimeout: Duration(seconds: 2),
+        baseUrl: "http://10.0.2.2/realtime_chat/",
+        headers: {"Content-Type": "application/json"},
+        /* receiveTimeout: Duration(seconds: 2),
+        connectTimeout: Duration(seconds: 2),*/
       ),
     );
     // DioClient dioClient = DioClient();
-    final otpresponse = await dio.post(
-      'verify-otp',
-      data: {
-        "phone_number": phone,
-        "otp_code": code,
-        "purpose": "authentication",
-      },
-    );
     try {
+      final otpresponse = await dio.post(
+        'verify_otp.php',
+        data: {"email": email, "otp_code": code},
+      );
       if (otpresponse.statusCode == 200) {
         Log.i(
           'OtpRemoteDataSourceImpl :: Http Status : ${otpresponse.statusCode}',

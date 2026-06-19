@@ -144,10 +144,8 @@ class LoginScreen extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => OtpScreen(
-                                      email.text.toString(),
-                                      "123456",
-                                    ),
+                                    builder: (context) =>
+                                        OtpScreen(email.text.toString()),
                                   ),
                                 );
                               } else {
@@ -240,102 +238,6 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
         ),
-        /* bottomNavigationBar:Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            height: 300,
-            decoration: BoxDecoration(color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20,),
-                CustomText.bodyBold(loginTextOne, Colors.black),
-                SizedBox(height: 20,),
-                SizedBox(height: 50,child: CustomPhoneFormField('Enter 10 digit mobile number',mobileno),),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
-                CustomButton(busy:loginprovider.isLoading, disabled: loginprovider.isLoading,title: loginButtonOne,onTap:()async{
-
-                  if(_formKey.currentState!.validate()){
-                    final loginResponse = await loginprovider.execute(mobileno.text, 'authentication');
-                    if(loginResponse){
-                      Log.i('LoginScreen :: Login Successfully!');
-                      if (!context.mounted) return;
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(mobileno.text.toString(), loginprovider.loginResponse.otp_code)));
-                    }else{
-                      Log.i('LoginScreen :: Login Failed!');
-                      if (!context.mounted) return;
-                      Fluttertoast.showToast(
-                        msg: "Server Error!",
-                        toastLength: Toast.LENGTH_SHORT, // Duration of the toast
-                        gravity: ToastGravity.BOTTOM, // Position of the toast
-                        timeInSecForIosWeb: 1, // Duration for iOS and web
-                        backgroundColor: Colors.black54, // Background color
-                        textColor: Colors.white, // Text color
-                        fontSize: 16.0, // Font size
-                      );
-                    }
-                  }else{
-                    Fluttertoast.showToast(
-                      msg: "Invalid Phone Number",
-                      toastLength: Toast.LENGTH_SHORT, // Duration of the toast
-                      gravity: ToastGravity.BOTTOM, // Position of the toast
-                      timeInSecForIosWeb: 1, // Duration for iOS and web
-                      backgroundColor: Colors.black54, // Background color
-                      textColor: Colors.white, // Text color
-                      fontSize: 16.0, // Font size
-                    );
-                  }
-
-                },),
-                SizedBox(height: 20,),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText.caption(loginTextTow, Colors.grey[600]!),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            child:  Text(loginTextThree,style: GoogleFonts.poppins(
-                                fontSize: 11,
-                                color: Colors.green,
-                                fontWeight: FontWeight.w300,
-                                decoration:  TextDecoration.underline,
-                                decorationColor: Colors.green
-                            ),),
-                            onTap: () async{
-                              await _launchUrl();
-                            },
-                          ),
-                          SizedBox(width: 4,),
-                          CustomText.caption(loginTextFour, Colors.grey[600]!),
-                          SizedBox(width: 4,),
-                          GestureDetector(
-                            child:  Text(loginTextFive,style: GoogleFonts.poppins(
-                                fontSize: 11,
-                                color: Colors.green,
-                                fontWeight: FontWeight.w300,
-                                decoration:  TextDecoration.underline,
-                                decorationColor: Colors.green
-                            ),),
-                            onTap: () async{
-                              await _launchUrl();
-                            },
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).viewPadding.bottom),
-              ],
-            ),
-          ),
-
-        )*/
       ),
     );
   }

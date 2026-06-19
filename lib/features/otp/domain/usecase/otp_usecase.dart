@@ -1,4 +1,4 @@
-import '../../../login/domain/model/login_response.dart';
+import '../../data/model/otp_response.dart';
 import '../repositories/otp_repository.dart';
 
 class OtpUseCase {
@@ -6,7 +6,7 @@ class OtpUseCase {
 
   OtpUseCase({required this.otpRepository});
 
-  Future<OtpResponse> call(String phone, String code, String purpose) async {
-    return await otpRepository.verifyOtp(phone, code, purpose);
+  Future<OtpResponse> call(String email, String code) async {
+    return await otpRepository.verifyOtp(email, code);
   }
 }

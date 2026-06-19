@@ -1,5 +1,5 @@
-import '../../../../login/domain/model/login_response.dart';
+import '../../model/otp_response.dart';
 
 abstract class OtpRemoteDataSource {
-  Future<OtpResponse> validateOtp(String phone, String code, String purpose);
+  Future<OtpResponse> validateOtp(String email, String code);
 }
