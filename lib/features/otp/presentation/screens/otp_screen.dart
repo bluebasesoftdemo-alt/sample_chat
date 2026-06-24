@@ -9,7 +9,7 @@ import '../../../../component/custom_button/custom_button.dart';
 import '../../../../component/custom_text/custom_text.dart';
 import '../../../../core/constant/color.dart';
 import '../../../../core/constant/stirng.dart';
-import '../../../home/Homescreen.dart';
+import '../../../home/presentation/screens/Homescreen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../provider/otp_provider.dart';
 

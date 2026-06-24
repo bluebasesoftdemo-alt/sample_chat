@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import '../../component/custom_card/OwnMessgaeCrad.dart';
-import '../../component/custom_card/ReplyCard.dart';
-import '../home/data/model/ChatModel.dart';
-import 'data/model/MessageModel.dart';
+import '../../../../component/custom_card/OwnMessgaeCrad.dart';
+import '../../../../component/custom_card/ReplyCard.dart';
+import '../provider/user_chat_list_provider.dart';
+import 'MessageModel.dart';
 
 class SingleChatScreen extends StatefulWidget {
-  SingleChatScreen({Key? key, required this.chatModel, required this.sourchat})
-    : super(key: key);
-  final ChatModel chatModel;
-  final ChatModel sourchat;
+  SingleChatScreen({Key? key}) : super(key: key);
 
   @override
   _SingleChatScreenState createState() => _SingleChatScreenState();
@@ -38,17 +36,17 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
         });
       }
     });
-    connect();
+    //connect();
   }
 
-  void connect() {
+  /* void connect() {
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
     socket = IO.io("http://192.168.0.106:5000", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     socket!.connect();
-    socket!.emit("signin", widget.sourchat.id);
+    socket!.emit("signin", '');
     socket!.onConnect((data) {
       print("Connected");
       socket!.on("message", (msg) {
@@ -62,18 +60,18 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
       });
     });
     print(socket!.connected);
-  }
+  }*/
 
-  void sendMessage(String message, int sourceId, int targetId) {
+  /* void sendMessage(String message, int sourceId, int targetId) {
     setMessage("source", message);
     socket!.emit("message", {
       "message": message,
       "sourceId": sourceId,
       "targetId": targetId,
     });
-  }
+  }*/
 
-  void setMessage(String type, String message) {
+  /* void setMessage(String type, String message) {
     MessageModel messageModel = MessageModel(
       type: type,
       message: message,
@@ -84,10 +82,14 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
     setState(() {
       messages.add(messageModel);
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
+    final userchatlistprovider = Provider.of<UserChatListProvider>(
+      context,
+      listen: false,
+    ).execute('11', '11');
     return Stack(
       children: [
         Image.asset(
@@ -115,7 +117,7 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
                       radius: 20,
                       backgroundColor: Colors.blueGrey,
                       child: SvgPicture.asset(
-                        widget.chatModel.isGroup!
+                        false
                             ? "assets/com/groups.svg"
                             : "assets/com/person.svg",
                         color: Colors.white,
@@ -135,7 +137,7 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.chatModel.name!,
+                        'widget.chatModel.name!',
                         style: TextStyle(
                           fontSize: 18.5,
                           fontWeight: FontWeight.bold,
@@ -321,7 +323,7 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
                                       color: Colors.white,
                                     ),
                                     onPressed: () {
-                                      if (sendButton) {
+                                      /* if (sendButton) {
                                         _scrollController.animateTo(
                                           _scrollController
                                               .position
@@ -330,15 +332,16 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
                                           curve: Curves.easeOut,
                                         );
                                         sendMessage(
+                                          //widget.chatModel.id!
                                           _controller.text,
-                                          widget.sourchat.id!,
-                                          widget.chatModel.id!,
+                                          '' as int,
+                                          1,
                                         );
                                         _controller.clear();
                                         setState(() {
                                           sendButton = false;
                                         });
-                                      }
+                                      }*/
                                     },
                                   ),
                                 ),

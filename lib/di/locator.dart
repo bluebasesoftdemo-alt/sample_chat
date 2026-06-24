@@ -1,5 +1,13 @@
 import 'package:get_it/get_it.dart';
+import 'package:sample_chat/features/single_chat/data/datasource/user_chat_list_remote_data_source/user_chat_list_remote_data_source_impl.dart';
+import 'package:sample_chat/features/single_chat/data/repositories/user_chat_list_repositoryimpl.dart';
+import 'package:sample_chat/features/single_chat/domain/usecase/user_chat_list_usecase.dart';
+import 'package:sample_chat/features/single_chat/presentation/provider/user_chat_list_provider.dart';
 
+import '../features/home/data/datasource/user_list_remote_data_source/user_list_remote_data_source_impl.dart';
+import '../features/home/data/repositories/userlist_repository_imppl.dart';
+import '../features/home/domain/usecase/userlist_usecase.dart';
+import '../features/home/presentation/provider/user_list_provider.dart';
 import '../features/login/data/datasource/login_remote_data_source/login_remote_data_source_impl.dart';
 import '../features/login/data/repositories/login_repository_impl.dart';
 import '../features/login/domain/usecase/login_usecase.dart';
@@ -40,6 +48,43 @@ void setLocator() {
     () => OtpUseCase(otpRepository: locator<OtpRepositoryImpl>()),
   );
   locator.registerFactory(() => OtpProvider(otpUseCase: locator<OtpUseCase>()));
+  //get all Users
+  locator.registerLazySingleton<UserListRemoteDataSourceImpl>(
+    () => UserListRemoteDataSourceImpl(),
+  );
+  locator.registerLazySingleton<UserListRepositoryImpl>(
+    () => UserListRepositoryImpl(
+      userlistRemoteDataSourceImpl: locator<UserListRemoteDataSourceImpl>(),
+    ),
+  );
+  locator.registerLazySingleton<UserListUseCase>(
+    () =>
+        UserListUseCase(userlistRepository: locator<UserListRepositoryImpl>()),
+  );
+  locator.registerFactory(
+    () => UserListProvider(userlistUseCase: locator<UserListUseCase>()),
+  );
+  //getuserchatlist
+  locator.registerLazySingleton<UserChatListRemoteDataSourceImpl>(
+    () => UserChatListRemoteDataSourceImpl(),
+  );
+  locator.registerLazySingleton<UserChatListRepositoryImpl>(
+    () => UserChatListRepositoryImpl(
+      userchatlistRemoteDataSourceImpl:
+          locator<UserChatListRemoteDataSourceImpl>(),
+    ),
+  );
+  locator.registerLazySingleton<UserChatListUseCase>(
+    () => UserChatListUseCase(
+      userchatlistRepository: locator<UserChatListRepositoryImpl>(),
+    ),
+  );
+  locator.registerFactory(
+    () => UserChatListProvider(
+      userchatlistUseCase: locator<UserChatListUseCase>(),
+    ),
+  );
+
   //profile
   /* locator.registerLazySingleton<ProfileRemoteDataSourceImpl>(() => ProfileRemoteDataSourceImpl());
   locator.registerLazySingleton<ProfileRepositoryImpl>(()=> ProfileRepositoryImpl(profileRemoteDataSourceImpl: locator<ProfileRemoteDataSourceImpl>()));

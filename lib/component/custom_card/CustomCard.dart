@@ -1,67 +1,52 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sample_chat/features/single_chat/SingleChatScreen.dart';
 
-import '../../features/home/data/model/ChatModel.dart';
+import '../../features/home/data/model/user_list_model.dart';
+import '../../features/single_chat/presentation/screen/SingleChatScreen.dart';
+
 class CustomCard extends StatelessWidget {
-  const CustomCard({Key? key, required this.chatModel, required this.sourchat}) : super(key: key);
-  final ChatModel chatModel;
-  final ChatModel sourchat;
+  CustomCard({Key? key, required this.userListModel, required this.index})
+    : super(key: key);
+  final UserListModel userListModel;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-           MaterialPageRoute(
-                builder: (contex) => SingleChatScreen(
-                      chatModel: chatModel,
-                      sourchat: sourchat,
-                    )));
+          context,
+          MaterialPageRoute(builder: (contex) => SingleChatScreen()),
+        );
       },
       child: Column(
         children: [
           ListTile(
             leading: CircleAvatar(
               radius: 30,
-              child: SvgPicture.asset(
-                chatModel.isGroup! ? "assets/com/groups.svg" : "assets/com/person.svg",
-                color: Colors.white,
-                height: 36,
-                width: 36,
+              //false ? "assets/com/groups.svg" : "assets/com/person.svg",
+              child: Image.network(
+                'http://10.0.2.2/realtime_chat/${userListModel.message?[index]?.userprofile!}',
+                height: 35,
+                width: 35,
               ),
               backgroundColor: Colors.blueGrey,
             ),
             title: Text(
-              chatModel.name!,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              '${userListModel.message?[index]?.username!}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             subtitle: Row(
               children: [
-                Icon(Icons.done_all),
-                SizedBox(
-                  width: 3,
-                ),
-                Text(
-                  chatModel.currentMessage!,
-                  style: TextStyle(
-                    fontSize: 13,
-                  ),
-                ),
+                Icon(Icons.done_all, color: Colors.cyan, size: 18),
+                SizedBox(width: 3),
+                Text('Hi, Welcome', style: TextStyle(fontSize: 13)),
               ],
             ),
-            trailing: Text(chatModel.time!),
+            trailing: Text('4.20'),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20, left: 80),
-            child: Divider(
-              thickness: 1,
-            ),
+            child: Divider(thickness: 1),
           ),
         ],
       ),

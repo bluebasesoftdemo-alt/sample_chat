@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../component/custom_chat/ChatPage.dart';
-import '../../core/constant/stirng.dart';
-import 'data/model/ChatModel.dart';
+import 'package:provider/provider.dart';
+import 'package:sample_chat/component/custom_chat/ChatPage.dart';
+import 'package:sample_chat/features/home/presentation/provider/user_list_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   String? email;
@@ -24,6 +23,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final userlistprovider = Provider.of<UserListProvider>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -44,7 +47,18 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(
         controller: _controller,
         children: [
-          ChatPage(chatmodels: chatmodels, sourchat: ChatModel()),
+          FutureBuilder<void>(
+            future: userlistprovider.execute('11', '111'),
+            builder: (cx, snap) {
+              if (snap.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snap.hasError) {
+                return Text('Error: ${snap.error}');
+              } else {
+                return ChatPage(userlistmodel: userlistprovider.userListModel);
+              }
+            },
+          ),
           Text("STATUS"),
           Text("Calls"),
         ],
