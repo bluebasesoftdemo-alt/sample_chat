@@ -8,7 +8,11 @@ class LoginRepositoryImpl extends LoginRepository {
   LoginRepositoryImpl({required this.loginRemoteDataSourceImpl});
 
   @override
-  Future<LoginResponse> getLoginResult(String username, String email) {
-    return loginRemoteDataSourceImpl.fetchLoginResult(username, email);
+  Future<LoginResponse> getLoginResult(
+    String username,
+    String email,
+    bool revoke,
+  ) {
+    return loginRemoteDataSourceImpl.fetchLoginResult(username, email, revoke);
   }
 }

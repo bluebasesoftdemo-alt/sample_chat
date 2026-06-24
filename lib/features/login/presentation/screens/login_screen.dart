@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_chat/component/custom_text_field/custom_text_field.dart';
+import 'package:sample_chat/core/utils/constant.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../component/app_color.dart';
@@ -134,6 +135,10 @@ class LoginScreen extends StatelessWidget {
                               final loginResponse = await loginprovider.execute(
                                 username.text,
                                 email.text,
+                                Constant.revokeState,
+                              );
+                              Log.i(
+                                'LoginScreen :: RevokeState :: ${Constant.revokeState}',
                               );
                               Log.i(
                                 'LoginScreen :: Login Response :: $loginResponse',
@@ -151,14 +156,21 @@ class LoginScreen extends StatelessWidget {
                               } else {
                                 Log.i('LoginScreen :: Login Failed!');
                                 if (!context.mounted) return;
-                                toastification.show(
-                                  type: ToastificationType.error,
-                                  alignment: Alignment.bottomCenter,
-                                  context: context,
-                                  // optional if you use ToastificationWrapper
-                                  title: Text('Login Failed!'),
-                                  autoCloseDuration: const Duration(seconds: 5),
-                                );
+                                if (loginprovider.loginResponse.message ==
+                                    'RESEND') {
+                                  mShowResendAlertBox(context);
+                                } else {
+                                  toastification.show(
+                                    type: ToastificationType.error,
+                                    alignment: Alignment.bottomCenter,
+                                    context: context,
+                                    // optional if you use ToastificationWrapper
+                                    title: Text('Login Failed'),
+                                    autoCloseDuration: const Duration(
+                                      seconds: 5,
+                                    ),
+                                  );
+                                }
                               }
                             } else {
                               toastification.show(
@@ -271,6 +283,47 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('No'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future mShowResendAlertBox(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        actions: [
+          SizedBox(
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                // Icon(Icons.location_pin,color: Colors.red,),
+                SizedBox(height: 10),
+                Text("Email! Already Exist,Press Yes to Continue"),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Constant.revokeState = true;
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Text('Yes'),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        Constant.revokeState = false;
+                        Navigator.of(context).pop(false);
+                      },
                       child: Text('No'),
                     ),
                   ],

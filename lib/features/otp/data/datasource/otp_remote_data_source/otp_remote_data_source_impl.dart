@@ -17,6 +17,7 @@ class OtpRemoteDataSourceImpl extends OtpRemoteDataSource {
     );
     // DioClient dioClient = DioClient();
     try {
+      Log.i('OtpRemoteDataSourceImpl :: OTP : ${code}');
       final otpresponse = await dio.post(
         'verify_otp.php',
         data: {"email": email, "otp_code": code},
@@ -35,7 +36,9 @@ class OtpRemoteDataSourceImpl extends OtpRemoteDataSource {
         throw Exception('Unable to Load the Data');
       }
     } catch (e) {
-      Log.i('OtpRemoteDataSourceImpl :: Something Went Wrong');
+      Log.i(
+        'OtpRemoteDataSourceImpl :: Something Went Wrong : ${e.toString()}',
+      );
       throw Exception('Something Went Wrong!');
     }
   }

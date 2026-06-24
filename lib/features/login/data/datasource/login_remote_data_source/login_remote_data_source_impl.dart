@@ -6,8 +6,11 @@ import 'login_remote_data_source.dart';
 
 class LoginRemoteDataSourceImpl extends LoginRemoteDataSource {
   @override
-  Future<LoginResponse> fetchLoginResult(String username, String email) async {
-    Log.i("sdfsdfsdsd");
+  Future<LoginResponse> fetchLoginResult(
+    String username,
+    String email,
+    bool revoke,
+  ) async {
     Dio dio = Dio(
       BaseOptions(
         baseUrl: "http://10.0.2.2/realtime_chat/",
@@ -18,8 +21,8 @@ class LoginRemoteDataSourceImpl extends LoginRemoteDataSource {
     );
     try {
       final loginresponse = await dio.post(
-        'demo_register.php',
-        data: {"username": username, "email": email},
+        'log_register.php',
+        data: {"username": username, "email": email, "revoke": revoke},
       );
       Log.i(loginresponse.statusCode);
       if (loginresponse.statusCode == 200) {

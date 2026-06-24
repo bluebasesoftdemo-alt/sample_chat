@@ -30,10 +30,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [
-          Container(child: Row(children: [Text('Profile ')])),
-          IconButton(icon: Icon(Icons.search), onPressed: () {}),
-        ],
+        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
         bottom: TabBar(
           controller: _controller,
           indicatorColor: Colors.white,

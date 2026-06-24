@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_chat/features/home/presentation/screens/Homescreen.dart';
 import 'package:sample_chat/features/otp/presentation/provider/otp_provider.dart';
 import 'package:sample_chat/features/single_chat/presentation/provider/user_chat_list_provider.dart';
+import 'package:sample_chat/features/splash/SplashScreen.dart';
 
 import 'core/utils/local_data_store.dart';
 import 'di/locator.dart';
@@ -35,9 +35,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Chat Application',
         theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-        home: HomeScreen(email: 'samir@test.com'),
+        home: SplashScreen(),
       ),
     );
   }

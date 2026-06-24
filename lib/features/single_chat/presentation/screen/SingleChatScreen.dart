@@ -36,12 +36,12 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
         });
       }
     });
-    //connect();
+    connect();
   }
 
-  /* void connect() {
+  void connect() {
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
-    socket = IO.io("http://192.168.0.106:5000", <String, dynamic>{
+    socket = IO.io("http://10.0.2.2:8080", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -51,7 +51,7 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
       print("Connected");
       socket!.on("message", (msg) {
         print(msg);
-        setMessage("destination", msg["message"]);
+        //  setMessage("destination", msg["message"]);
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
           duration: Duration(milliseconds: 300),
@@ -60,7 +60,7 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
       });
     });
     print(socket!.connected);
-  }*/
+  }
 
   /* void sendMessage(String message, int sourceId, int targetId) {
     setMessage("source", message);
@@ -89,7 +89,7 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
     final userchatlistprovider = Provider.of<UserChatListProvider>(
       context,
       listen: false,
-    ).execute('11', '11');
+    );
     return Stack(
       children: [
         Image.asset(
@@ -196,23 +196,54 @@ class _SingleChatScreenState extends State<SingleChatScreen> {
                 children: [
                   Expanded(
                     // height: MediaQuery.of(context).size.height - 150,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      itemCount: messages.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == messages.length) {
-                          return Container(height: 70);
-                        }
-                        if (messages[index].type == "source") {
-                          return OwnMessageCard(
-                            message: messages[index].message!,
-                            time: messages[index].time!,
-                          );
+                    child: FutureBuilder<void>(
+                      future: userchatlistprovider.execute('11', '15'),
+                      builder: (cx, snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snap.hasError) {
+                          return Text('Error: ${snap.error}');
                         } else {
-                          return ReplyCard(
-                            message: messages[index].message!,
-                            time: messages[index].time!,
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            controller: _scrollController,
+                            itemCount: userchatlistprovider
+                                .userchatListModel
+                                .userchat
+                                ?.length,
+                            itemBuilder: (context, index) {
+                              if (index ==
+                                  userchatlistprovider
+                                      .userchatListModel
+                                      .userchat
+                                      ?.length) {
+                                return Container(height: 70);
+                              }
+                              if (userchatlistprovider
+                                      .userchatListModel
+                                      .userchat?[index]
+                                      ?.fromuserid ==
+                                  11) {
+                                //messages[index].type == "source"
+                                return OwnMessageCard(
+                                  message: userchatlistprovider
+                                      .userchatListModel
+                                      .userchat?[index]!
+                                      .privatechatmessage!,
+                                  //messages[index].message!,
+                                  time: '',
+                                );
+                              } else {
+                                return ReplyCard(
+                                  message: userchatlistprovider
+                                      .userchatListModel
+                                      .userchat?[index]!
+                                      .privatechatmessage!,
+                                  //messages[index].message!,
+                                  time: '',
+                                );
+                              }
+                            },
                           );
                         }
                       },

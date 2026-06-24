@@ -10,22 +10,27 @@ class LoginProvider extends ChangeNotifier {
   final LoginUseCase loginUseCase;
   bool _isLoading = false;
   String _error = '';
+  String _message = '';
 
   bool get isLoading => _isLoading;
 
   String get error => _error;
+
+  String get message => _message;
   bool result = false;
-  LoginResponse loginResponse = LoginResponse();
+  LoginResponse _loginResponse = LoginResponse();
+
+  LoginResponse get loginResponse => _loginResponse;
 
   LoginProvider({required this.loginUseCase});
 
-  Future<bool> execute(String username, String email) async {
+  Future<bool> execute(String username, String email, bool revoke) async {
     _isLoading = true;
     notifyListeners();
     try {
-      loginResponse = await loginUseCase.call(username, email);
+      _loginResponse = await loginUseCase.call(username, email, revoke);
       Log.i("LoginProvider :: LoginRespnonse : $loginResponse");
-      loginResponse.status == true ? result = true : result = false;
+      _loginResponse.status == true ? result = true : result = false;
       _isLoading = false;
       notifyListeners();
     } catch (e) {

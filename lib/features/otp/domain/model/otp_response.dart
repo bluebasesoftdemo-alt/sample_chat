@@ -1,7 +1,7 @@
 class OtpResponse {
   String? message;
   bool? status;
-  String? user_id;
+  int? user_id;
   String? name;
   String? profile;
   String? token;

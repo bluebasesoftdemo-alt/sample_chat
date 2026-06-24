@@ -9,6 +9,7 @@ import '../../../../component/custom_button/custom_button.dart';
 import '../../../../component/custom_text/custom_text.dart';
 import '../../../../core/constant/color.dart';
 import '../../../../core/constant/stirng.dart';
+import '../../../../core/utils/constant.dart';
 import '../../../home/presentation/screens/Homescreen.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../provider/otp_provider.dart';
@@ -20,6 +21,7 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Constant.revokeState = false;
     final otpcode = Provider.of<OtpProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,

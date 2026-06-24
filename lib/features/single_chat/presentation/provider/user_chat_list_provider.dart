@@ -13,7 +13,9 @@ class UserChatListProvider extends ChangeNotifier {
 
   String get error => _error;
   bool result = false;
-  UserChatListModel userchatListModel = UserChatListModel();
+  UserChatListModel _userchatListModel = UserChatListModel();
+
+  UserChatListModel get userchatListModel => _userchatListModel;
 
   UserChatListProvider({required this.userchatlistUseCase});
 
@@ -21,11 +23,11 @@ class UserChatListProvider extends ChangeNotifier {
     _isLoading = true;
     //notifyListeners();
     try {
-      userchatListModel = await userchatlistUseCase.call(
+      _userchatListModel = await userchatlistUseCase.call(
         to_user_id,
         from_user_id,
       );
-      Log.i("LoginProvider :: LoginRespnonse : $userchatListModel");
+      Log.i("LoginProvider :: LoginRespnonse : $_userchatListModel");
       _isLoading = false;
       notifyListeners();
     } catch (e) {
