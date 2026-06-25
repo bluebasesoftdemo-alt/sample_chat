@@ -3,19 +3,25 @@ import 'package:provider/provider.dart';
 import 'package:sample_chat/component/custom_chat/ChatPage.dart';
 import 'package:sample_chat/features/home/presentation/provider/user_list_provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  String? email;
+import '../../../../core/utils/local_data_store.dart';
 
-  HomeScreen({super.key, required this.email});
+class HomeScreen extends StatefulWidget {
+  String? user_email;
+  int? user_id;
+  String? user_token;
+
+  HomeScreen({super.key, required this.user_email, required this.user_id, required this.user_token});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState(user_email, user_id, user_token);
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   TabController? _controller;
-
+  String? user_email;
+  int? user_id;
+  String? user_token;
+  _HomeScreenState(this.user_email, this.user_id, this.user_token);
   void initState() {
     super.initState();
     _controller = TabController(length: 3, vsync: this, initialIndex: 0);
@@ -45,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _controller,
         children: [
           FutureBuilder<void>(
-            future: userlistprovider.execute('11', '111'),
+            future: userlistprovider.execute(user_id!, '111'),
             builder: (cx, snap) {
               if (snap.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());

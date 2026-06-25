@@ -6,7 +6,7 @@ import '../../../../../core/utils/logger.dart';
 
 class UserListRemoteDataSourceImpl extends UserListRemoteDataSource {
   @override
-  Future<UserListModel> fetchUserList(String userid, String usertoken) async {
+  Future<UserListModel> fetchUserList(int userid, String usertoken) async {
     Dio dio = Dio(
       BaseOptions(
         baseUrl: "http://10.0.2.2/realtime_chat/",

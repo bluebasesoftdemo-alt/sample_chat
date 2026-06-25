@@ -9,7 +9,7 @@ class UserListRepositoryImpl extends UserListRepository {
   UserListRepositoryImpl({required this.userlistRemoteDataSourceImpl});
 
   @override
-  Future<UserListModel> getUserListResult(String userid, String usertoken) {
+  Future<UserListModel> getUserListResult(int userid, String usertoken) {
     // TODO: implement getLoginResult
     return userlistRemoteDataSourceImpl.fetchUserList(userid, usertoken);
   }

@@ -7,8 +7,8 @@ import '../../../../../core/utils/logger.dart';
 class UserChatListRemoteDataSourceImpl extends UserChatListRemoteDataSource {
   @override
   Future<UserChatListModel> fetchUserChatList(
-    String to_user_id,
-    String from_user_id,
+    int to_user_id,
+    int from_user_id,
   ) async {
     // TODO: implement fetchUserList
     Dio dio = Dio(
@@ -22,7 +22,7 @@ class UserChatListRemoteDataSourceImpl extends UserChatListRemoteDataSource {
     try {
       final userchatlistresponse = await dio.post(
         'get_user_chat.php',
-        data: {"to_user_id": 11, "from_user_id": 15},
+        data: {"to_user_id": to_user_id, "from_user_id": from_user_id},
       );
       Log.i(userchatlistresponse.statusCode);
       if (userchatlistresponse.statusCode == 200) {

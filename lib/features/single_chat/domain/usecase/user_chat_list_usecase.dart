@@ -6,7 +6,7 @@ class UserChatListUseCase {
 
   UserChatListUseCase({required this.userchatlistRepository});
 
-  Future<UserChatListModel> call(String userid, String usertoken) {
-    return userchatlistRepository.getUserChatListResult(userid, usertoken);
+  Future<UserChatListModel> call(int to_userid, int from_user_id) {
+    return userchatlistRepository.getUserChatListResult(to_userid, from_user_id);
   }
 }

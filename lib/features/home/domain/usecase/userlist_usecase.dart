@@ -7,7 +7,7 @@ class UserListUseCase {
 
   UserListUseCase({required this.userlistRepository});
 
-  Future<UserListModel> call(String userid, String usertoken) {
+  Future<UserListModel> call(int userid, String usertoken) {
     return userlistRepository.getUserListResult(userid, usertoken);
   }
 }

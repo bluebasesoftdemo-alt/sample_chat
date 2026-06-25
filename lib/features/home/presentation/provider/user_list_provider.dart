@@ -17,7 +17,7 @@ class UserListProvider extends ChangeNotifier {
 
   UserListProvider({required this.userlistUseCase});
 
-  Future<bool> execute(String userid, String usertoken) async {
+  Future<bool> execute(int userid, String usertoken) async {
     _isLoading = true;
     //notifyListeners();
     try {

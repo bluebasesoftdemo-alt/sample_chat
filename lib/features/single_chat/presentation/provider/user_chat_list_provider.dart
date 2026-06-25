@@ -19,14 +19,11 @@ class UserChatListProvider extends ChangeNotifier {
 
   UserChatListProvider({required this.userchatlistUseCase});
 
-  Future<bool> execute(String to_user_id, String from_user_id) async {
+  Future<bool> execute(int to_user_id, int from_user_id) async {
     _isLoading = true;
     //notifyListeners();
     try {
-      _userchatListModel = await userchatlistUseCase.call(
-        to_user_id,
-        from_user_id,
-      );
+      _userchatListModel = await userchatlistUseCase.call(to_user_id, from_user_id );
       Log.i("LoginProvider :: LoginRespnonse : $_userchatListModel");
       _isLoading = false;
       notifyListeners();

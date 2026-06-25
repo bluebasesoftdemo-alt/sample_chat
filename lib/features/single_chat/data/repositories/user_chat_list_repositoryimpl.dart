@@ -10,13 +10,11 @@ class UserChatListRepositoryImpl extends UserChatListRepository {
 
   @override
   Future<UserChatListModel> getUserChatListResult(
-    String to_user_id,
-    String from_user_id,
+    int to_user_id,
+    int from_user_id,
   ) {
     // TODO: implement getUserChatListResult
-    return userchatlistRemoteDataSourceImpl.fetchUserChatList(
-      to_user_id,
-      from_user_id,
+    return userchatlistRemoteDataSourceImpl.fetchUserChatList(to_user_id, from_user_id,
     );
   }
 }

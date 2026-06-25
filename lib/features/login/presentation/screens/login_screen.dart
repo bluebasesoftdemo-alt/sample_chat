@@ -41,17 +41,8 @@ class LoginScreen extends StatelessWidget {
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Positioned(
-                  top: 32,
-                  height: 100,
-                  width: 110,
-                  child: SvgPicture.asset(loginImageOne),
-                ),
-                Positioned(
-                  top: 50,
-                  left: 18,
-                  height: 42,
-                  width: 42,
+                Positioned(top: 32, height: 100, width: 110, child: SvgPicture.asset(loginImageOne),),
+                Positioned(top: 50, left: 18, height: 42, width: 42,
                   child: GestureDetector(
                     child: SvgPicture.asset(loginImageTwo),
                     onTap: () {
@@ -59,189 +50,78 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                Positioned(
-                  left: 50,
-                  right: 100,
-                  top: 210,
-                  child: SvgPicture.asset(loginImageThree),
-                ),
-                Positioned(
-                  left: MediaQuery.of(context).size.width - 100,
-                  top: 180,
-                  child: SvgPicture.asset(loginImageFour),
-                ),
-                Positioned(
-                  left: 81,
-                  bottom: MediaQuery.of(context).size.height * 0.4,
-                  height: 100,
-                  width: 110,
-                  child: SvgPicture.asset(loginImageFive),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      ),
-                    ),
+                Positioned(left: 50, right: 100, top: 210, child: SvgPicture.asset(loginImageThree),),
+                Positioned(left: MediaQuery.of(context).size.width - 100, top: 180, child: SvgPicture.asset(loginImageFour),),
+                Positioned(left: 81, bottom: MediaQuery.of(context).size.height * 0.4, height: 100, width: 110, child: SvgPicture.asset(loginImageFive),),
+                Positioned(bottom: 0, left: 0, right: 0, child:
+                Container(padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25),),),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 20),
                         CustomText.bodyBold(loginTextOne, Colors.black),
                         SizedBox(height: 20),
-                        SizedBox(
-                          height: 70,
-                          child: CustomFormField(
-                            'Enter your Name',
-                            true,
-                            false,
-                            false,
-                            false,
-                            username,
-                          ),
-                        ),
+                        SizedBox(height: 70, child: CustomFormField('Enter your Name', true, false, false, false, username,)),
                         SizedBox(height: 20),
-                        SizedBox(
-                          height: 70,
-                          child: CustomFormField(
-                            'Enter your email',
-                            false,
-                            true,
-                            false,
-                            false,
-                            email,
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                        ),
-                        CustomButton(
-                          busy: false,
-                          disabled: false,
-                          title: loginButtonOne,
+                        SizedBox(height: 70, child: CustomFormField('Enter your email', false, true, false, false, email,)),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+                        CustomButton(busy: false, disabled: false, title: loginButtonOne,
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
-                              Log.i(
-                                'LoginScreen :: UserName :: ${username.text}',
-                              );
-                              Log.i('LoginScreen :: Email :: ${email.text}');
-                              final loginResponse = await loginprovider.execute(
-                                username.text,
-                                email.text,
-                                Constant.revokeState,
-                              );
-                              Log.i(
-                                'LoginScreen :: RevokeState :: ${Constant.revokeState}',
-                              );
-                              Log.i(
-                                'LoginScreen :: Login Response :: $loginResponse',
-                              );
-                              if (loginResponse) {
-                                Log.i('LoginScreen :: Login Successfully!');
+                              Log.i('LoginScreen :: LoginData :: UserName: ${username.text} :: Email : ${email.text}',);
+                              final loginResponse = await loginprovider.execute(username.text, email.text, Constant.revokeState,);
+                              Log.i('LoginScreen :: RevokeState : ${Constant.revokeState} :: Login Response : $loginResponse',);
+                              if (loginResponse)
+                              {
                                 if (!context.mounted) return;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        OtpScreen(email.text.toString()),
-                                  ),
-                                );
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(email.text.toString()),));
+                                  Log.i('LoginScreen :: Login Successfully!');
                               } else {
                                 Log.i('LoginScreen :: Login Failed!');
                                 if (!context.mounted) return;
-                                if (loginprovider.loginResponse.message ==
-                                    'RESEND') {
+                                if (loginprovider.loginResponse.message == 'RESEND') {
                                   mShowResendAlertBox(context);
                                 } else {
-                                  toastification.show(
-                                    type: ToastificationType.error,
-                                    alignment: Alignment.bottomCenter,
-                                    context: context,
-                                    // optional if you use ToastificationWrapper
-                                    title: Text('Login Failed'),
-                                    autoCloseDuration: const Duration(
-                                      seconds: 5,
-                                    ),
-                                  );
+                                  toastification.show(type: ToastificationType.error, alignment: Alignment.bottomCenter, context: context, title: Text('Login Failed'), autoCloseDuration: const Duration(seconds: 5,),);
                                 }
                               }
                             } else {
-                              toastification.show(
-                                type: ToastificationType.error,
-                                alignment: Alignment.bottomCenter,
-                                context: context,
-                                // optional if you use ToastificationWrapper
-                                title: Text('Please,fill all details!'),
-                                autoCloseDuration: const Duration(seconds: 5),
+                              toastification.show(type: ToastificationType.error, alignment: Alignment.bottomCenter, context: context,
+                                title: Text('Please,fill all details!'), autoCloseDuration: const Duration(seconds: 5),
                               );
                             }
                           },
                         ),
                         SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.center,
+                      /*  Align(alignment: Alignment.center,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomText.caption(
-                                loginTextTow,
-                                Colors.grey[600]!,
-                              ),
+                            /*  CustomText.caption(loginTextTow, Colors.grey[600]!,),*/
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    child: Text(
-                                      loginTextThree,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 11,
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.w300,
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: Colors.green,
-                                      ),
-                                    ),
+                                 /* GestureDetector(child: Text(loginTextThree, style: GoogleFonts.poppins(fontSize: 11, color: Colors.green, fontWeight: FontWeight.w300, decoration: TextDecoration.underline, decorationColor: Colors.green,),),
                                     onTap: () async {
                                       await _launchUrl();
                                     },
-                                  ),
-                                  SizedBox(width: 4),
-                                  CustomText.caption(
-                                    loginTextFour,
-                                    Colors.grey[600]!,
-                                  ),
-                                  SizedBox(width: 4),
-                                  GestureDetector(
-                                    child: Text(
-                                      loginTextFive,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 11,
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.w300,
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: Colors.green,
-                                      ),
-                                    ),
+                                  ),*/
+                                /*  SizedBox(width: 4),
+                                  CustomText.caption(loginTextFour, Colors.grey[600]!,),
+                                  SizedBox(width: 4),*/
+                                  /*GestureDetector(child: Text(loginTextFive, style: GoogleFonts.poppins(fontSize: 11, color: Colors.green, fontWeight: FontWeight.w300, decoration: TextDecoration.underline, decorationColor: Colors.green,),),
                                     onTap: () async {
                                       await _launchUrl();
                                     },
-                                  ),
+                                  ),*/
                                 ],
                               ),
                             ],
                           ),
-                        ),
+                        ),*/
                         SizedBox(height: 10),
-                        SizedBox(
-                          height: MediaQuery.of(context).viewPadding.bottom,
-                        ),
+                        SizedBox(height: MediaQuery.of(context).viewPadding.bottom,),
                       ],
                     ),
                   ),

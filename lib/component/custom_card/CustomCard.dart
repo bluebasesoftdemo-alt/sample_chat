@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utils/logger.dart';
 import '../../features/home/data/model/user_list_model.dart';
 import '../../features/single_chat/presentation/screen/SingleChatScreen.dart';
 
 class CustomCard extends StatelessWidget {
-  CustomCard({Key? key, required this.userListModel, required this.index})
-    : super(key: key);
+  CustomCard({Key? key, required this.userListModel, required this.index}) : super(key: key);
   final UserListModel userListModel;
   final int index;
 
@@ -13,10 +13,12 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (contex) => SingleChatScreen()),
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (contex) => SingleChatScreen(
+          kUserName: userListModel.message?[index]?.username,
+          kUserid: userListModel.message?[index]?.userid,
+          kUserprofile: userListModel.message?[index]?.userprofile!,
+          kUserLoginStatus: userListModel.message?[index]?.userloginstatus,
+          kUserTimestamp: '',)),);
       },
       child: Column(
         children: [

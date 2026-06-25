@@ -17,7 +17,7 @@ class HiveService {
     await box.put('kUserId', value);
   }
 
-  dynamic getUserId(String key) {
+  dynamic getUserId() {
     return box.get('kUserId');
   }
 

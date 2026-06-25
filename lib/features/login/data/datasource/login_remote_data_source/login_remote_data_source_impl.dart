@@ -11,24 +11,15 @@ class LoginRemoteDataSourceImpl extends LoginRemoteDataSource {
     String email,
     bool revoke,
   ) async {
-    Dio dio = Dio(
-      BaseOptions(
-        baseUrl: "http://10.0.2.2/realtime_chat/",
-        headers: {"Content-Type": "application/json"},
-        //receiveTimeout: Duration(seconds: 1),
-        // connectTimeout: Duration(seconds: 1),
-      ),
-    );
+    Dio dio = Dio(BaseOptions(baseUrl: "http://10.0.2.2/realtime_chat/", headers: {"Content-Type": "application/json"},
+      //receiveTimeout: Duration(seconds: 1),
+      //connectTimeout: Duration(seconds: 1),
+    ),);
     try {
-      final loginresponse = await dio.post(
-        'log_register.php',
-        data: {"username": username, "email": email, "revoke": revoke},
-      );
-      Log.i(loginresponse.statusCode);
+      Log.i('Received Data :: LoginScreen :: UserName : $username :: UserEamail : $email :: Revoke : $revoke');
+      final loginresponse = await dio.post('log_register.php', data: {"username": username, "email": email, "revoke": revoke},);
+      Log.i('LoginRemoteDataSourceImpl :: Http : Status Code : ${loginresponse.statusCode}',);
       if (loginresponse.statusCode == 200) {
-        Log.i(
-          'LoginRemoteDataSourceImpl :: Http : Status Code : ${loginresponse.statusCode}',
-        );
         dynamic response = loginresponse.data;
         Log.i('LoginRemoteDataSourceImpl :: Http : Response Data : $response');
         Map<String, dynamic> data = Map<String, dynamic>.from(response);
